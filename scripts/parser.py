@@ -7,7 +7,6 @@ import json
 import os
 import sys
 import jaconv
-import Mykytea
 from html.parser import HTMLParser
 from tokenizers import normalizers
 
@@ -78,9 +77,9 @@ class KurashiruParser(HTMLParser):
             
 
 if __name__ == "__main__":
+    data_dir = "./data/recipes"
+
     normalizer = normalizers.Sequence([normalizers.NFKC()])
-    kytea = kytea = Mykytea.Mykytea("-notags -model jp-0.4.7-1.mod")
-    data_dir = sys.argv[1]
 
     for recipe_id in os.listdir(data_dir):
         recipe_dir = "{}/{}".format(data_dir, recipe_id)
@@ -93,24 +92,18 @@ if __name__ == "__main__":
         with open("{}/title.txt".format(recipe_dir), "w") as fw:
             fw.write(parser.title + "\n")
     
-        with open("{}/ingredients.txt".format(recipe_dir), "w") as fw1, \
-             open("{}/ingredients.tok".format(recipe_dir), "w") as fw2:
-
+        with open("{}/ingredients.txt".format(recipe_dir), "w") as fw:
             for line in parser.ingredients:
-                line = normalizer.normalize_str(line).replace("　", "")
-                line = jaconv.h2z(line, digit=True, ascii=True)
+                line = normalizer.normalize_str(line)
+                line = jaconv.h2z(line, digit=True, ascii=True).replace("　", "")
 
-                fw1.write(line + "\n")
-                fw2.write(" ".join([w for w in kytea.getWS(line)]).replace("　 ", "") + "\n")
+                fw.write(line + "\n")
 
-        with open("{}/instructions.txt".format(recipe_dir), "w") as fw1, \
-             open("{}/instructions.tok".format(recipe_dir), "w") as fw2:
-
+        with open("{}/instructions.txt".format(recipe_dir), "w") as fw:
             for line in parser.instructions:
-                line = normalizer.normalize_str(line).replace("　", "")
-                line = jaconv.h2z(line, digit=True, ascii=True)
+                line = normalizer.normalize_str(line)
+                line = jaconv.h2z(line, digit=True, ascii=True).replace("　", "")
 
-                fw1.write(line + "\n")
-                fw2.write(" ".join([w for w in kytea.getWS(line)]).replace("　 ", "") + "\n")
+                fw.write(line + "\n")
     
 

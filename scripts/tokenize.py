@@ -13,7 +13,7 @@ for recipe_id in os.listdir(data_dir):
     ann = annotations[recipe_id]
     recipe_dir = os.path.join(data_dir, recipe_id)
 
-    ## tokenize words
+    ## tokenized words
     for file_type in ("ingredient", "instruction"):
         with open(os.path.join(recipe_dir, "{}s.tok".format(file_type)), "w") as fw:
             for i, line in enumerate(open(os.path.join(recipe_dir, "{}s.txt".format(file_type))).readlines()):
