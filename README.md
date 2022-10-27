@@ -9,7 +9,7 @@ This repository contains the annotations and scripts to download data used in [V
 ~~~
 $ zsh ./scripts/download_recipes.zsh
 ~~~
-This script automatically creates files for tokenized words of ingredient and instruction texts (`ingredients.tok` and `instructions.tok`).
+This script also automatically creates files for tokenized words of ingredient and instruction texts (`ingredients.tok` and `instructions.tok`).
 
 ## Citation
 ```
